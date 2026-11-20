@@ -57,7 +57,17 @@ function World.build(): Folder
 	folder.Name = "Island"
 	local r = Config.ISLAND_RADIUS
 
-	cylinder(r + 400, 2, -3, Color3.fromRGB(40, 140, 220), Enum.Material.Glass, "Sea", folder).Transparency = 0.2
+	-- Real Roblox water around the island: players can swim back to the beach.
+	local terrain = workspace.Terrain
+	terrain.WaterColor = Color3.fromRGB(30, 150, 200)
+	terrain.WaterTransparency = 0.6
+	terrain.WaterWaveSize = 0.15
+	terrain:FillCylinder(CFrame.new(0, -4, 0), 8, r + 160, Enum.Material.Water)
+	terrain:FillCylinder(CFrame.new(0, -9, 0), 2, r + 160, Enum.Material.Sand)
+	-- Low sand steps under the water's edge so a swimmer can walk back up onto the beach.
+	for i, top in { -1.4, -0.8, -0.2, 0.4 } do
+		cylinder(r + 30 - i * 4, 4, top - 2, Color3.fromRGB(225, 200, 145), Enum.Material.Sand, "Shore", folder)
+	end
 	cylinder(r + 14, 4, -1, Color3.fromRGB(238, 214, 160), Enum.Material.Sand, "Beach", folder)
 	cylinder(r, 4, 0, Color3.fromRGB(90, 180, 80), Enum.Material.Grass, "Meadow", folder)
 
@@ -82,12 +92,25 @@ function World.build(): Folder
 
 	local spawn = Instance.new("SpawnLocation")
 	spawn.Anchored = true
-	spawn.Size = Vector3.new(10, 1, 10)
-	spawn.Position = Vector3.new(0, 2.5, 0)
-	spawn.Color = Color3.fromRGB(255, 200, 60)
-	spawn.Material = Enum.Material.Neon
+	spawn.Shape = Enum.PartType.Cylinder
+	spawn.Size = Vector3.new(1, 12, 12)
+	spawn.CFrame = CFrame.new(0, 2.5, 0) * CFrame.Angles(0, 0, math.rad(90))
+	spawn.Color = Color3.fromRGB(245, 170, 60)
+	spawn.Material = Enum.Material.SmoothPlastic
+	spawn.Duration = 0 -- no force-field bubble: nothing here can hurt you
 	spawn.Neutral = true
 	spawn.Parent = folder
+
+	-- Soft haze so the horizon reads as sea and sky, not a hard edge.
+	local Lighting = game:GetService("Lighting")
+	if not Lighting:FindFirstChildOfClass("Atmosphere") then
+		local air = Instance.new("Atmosphere")
+		air.Density = 0.3
+		air.Haze = 1.2
+		air.Color = Color3.fromRGB(200, 225, 255)
+		air.Decay = Color3.fromRGB(120, 170, 220)
+		air.Parent = Lighting
+	end
 
 	folder.Parent = workspace
 	return folder
