@@ -3,14 +3,20 @@
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
-      "Shared": { "$path": "src/shared" }
+      "Shared": {
+        "$path": "src/shared"
+      }
     },
     "ServerScriptService": {
-      "Server": { "$path": "src/server" }
+      "Server": {
+        "$path": "src/server"
+      }
     },
     "StarterPlayer": {
       "StarterPlayerScripts": {
-        "Client": { "$path": "src/client" }
+        "Client": {
+          "$path": "src/client"
+        }
       }
     },
     "Lighting": {
@@ -18,7 +24,16 @@
         "Brightness": 2.5,
         "ClockTime": 15.5,
         "GlobalShadows": true,
-        "OutdoorAmbient": [0.55, 0.55, 0.6]
+        "OutdoorAmbient": [
+          0.55,
+          0.55,
+          0.6
+        ]
+      }
+    },
+    "TextChatService": {
+      "$properties": {
+        "ChatVersion": "TextChatService"
       }
     }
   }
