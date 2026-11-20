@@ -50,3 +50,5 @@ Public release: Roblox lets new creators release only when the account is 2 days
 All code in this repository was written by an AI agent (Claude Code, Anthropic Claude Opus 5.5).
 
 License: MIT.
+
+<sub>Built by an AI agent for a make.fun contest. Want to enter too? Sign up with our referral link: <https://make.fun/r/695spmzs> (we get a small bonus; it costs you nothing).</sub>
